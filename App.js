@@ -23,7 +23,7 @@ const CartStack = createNativeStackNavigator();
 
 function ProductStackScreens() {
   return (
-    <ProductStack.Navigator screenOptions={{ headerShown: false }}>
+    <ProductStack.Navigator screenOptions={{ headerShown: true }}>
       <ProductStack.Screen name="ProductList" component={ProductListScreen} />
       <ProductStack.Screen name="ProductDetail" component={ProductDetailScreen} />
     </ProductStack.Navigator>

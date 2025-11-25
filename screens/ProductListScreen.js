@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     fontSize: 15,
     color: '#111827',
-    marginBottom: 12
+    marginBottom: 12,
   },
   categoryContainer: {
     flexDirection: 'row',
@@ -243,6 +243,7 @@ const styles = StyleSheet.create({
   },
   productImage: {
     width: '100%',
+    height: undefined,
     aspectRatio: 1,
     borderRadius: 8,
     marginBottom: 8,
