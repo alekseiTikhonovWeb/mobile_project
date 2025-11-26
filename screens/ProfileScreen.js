@@ -1,22 +1,43 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { auth } from '../services/firebase';
+import { signOut } from 'firebase/auth';
 
 export default function ProfileScreen({ navigation }) {
   const user = auth.currentUser;
   const name = user?.name || 'User';
   const email = user?.email || '';
 
+  const handleSignOut = () => {
+    Alert.alert(
+      'Log Out', 'Are you sure you want to Log out?',
+      [{ text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Log Out',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await signOut(auth);
+            } catch (error) {
+              console.log(error);
+              Alert.alert('Error', 'Could not log out.');
+            }
+          },
+        },
+      ]
+    );
+  };
+
   return (
-    <View style={styles.screen}>
+    <ScrollView style={styles.screen}>
       <LinearGradient
         colors={['#6bd7efff', '#70e97aff']}
         style={styles.headerGradient}
       >
           <View style={styles.headerContent}>
-            <Text style={styles.headerTitle}>Profile</Text>
+            <Text style={styles.headerTitle}>Your Profile</Text>
           </View>
 
           <View style={styles.profileContainer}>
@@ -132,7 +153,7 @@ export default function ProfileScreen({ navigation }) {
         {/* Support */}
         <TouchableOpacity
           style={styles.menuRow}
-          onPress={() => navigation.navigate('HelpSupport')}
+          onPress={() => navigation.navigate('Help')}
         >
           <View style={styles.menuLeft}>
             <Ionicons
@@ -145,8 +166,33 @@ export default function ProfileScreen({ navigation }) {
           </View>
           <Ionicons name="chevron-forward" size={20} color="#9ca3af" />
         </TouchableOpacity>
+
+        {/* About */}
+        <TouchableOpacity
+          style={styles.menuRow}
+          onPress={() => navigation.navigate('About')}
+        >
+          <View style={styles.menuLeft}>
+            <Ionicons
+              name="information-circle-outline"
+              size={20}
+              color="#2563eb"
+              style={styles.menuIcon}
+            />
+            <Text style={styles.menuLabel}>About</Text>
+          </View>
+          <Ionicons name="chevron-forward" size={20} color="#9ca3af" />
+        </TouchableOpacity>
       </View>
-    </View>
+      <View>
+        {/* Sign Out */}
+        <TouchableOpacity
+            style={styles.signOutButton}
+            onPress={handleSignOut}>
+            <Text style={styles.signOutText}>LOG OUT</Text>
+          </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 }
 
@@ -163,7 +209,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: 26,
     fontWeight: '600',
     color: '#ffffff',
   },
@@ -248,5 +294,19 @@ const styles = StyleSheet.create({
   menuLabel: {
     fontSize: 14,
     color: '#111827',
+  },
+  signOutButton: {
+    marginTop: 24,
+    marginHorizontal: 16,
+    height: 48,
+    borderRadius: 12,
+    backgroundColor: '#ef4444',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  signOutText: {
+    color: '#ffffff',
+    fontWeight: '600',
+    fontSize: 16,
   },
 });

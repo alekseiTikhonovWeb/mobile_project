@@ -16,6 +16,9 @@ import OrdrHistoryScreen from './screens/OrdrHistoryScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import AddressesScreen from './screens/AddressesScreen';
 import PaymntMethodScreen from './screens/PaymntMethodScreen';
+import HelpScreen from './screens/HelpScreen';
+import AboutScreen from './screens/AboutScreen';
+import WishlistScreen from './screens/WishlistScreen';
 import { CartProvider } from './contexts/CartContext';
 import { auth } from './services/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -84,8 +87,11 @@ function ProfileScreens() {
     <Profile.Navigator screenOptions={{ headerShown: false }}>
       <Profile.Screen name="ProfileScreen" component={ProfileScreen} />
       <Profile.Screen name="OrdrHistory" component={OrdrHistoryScreen} />
+      <Profile.Screen name="Wishlist" component={WishlistScreen} />
       <Profile.Screen name="Addresses" component={AddressesScreen} />
       <Profile.Screen name="PaymntMethods" component={PaymntMethodScreen} />
+      <Profile.Screen name="Help" component={HelpScreen} />
+      <Profile.Screen name="About" component={AboutScreen} />
     </Profile.Navigator>
   );
 }

@@ -167,6 +167,7 @@ const styles = StyleSheet.create({
     color: '#dc2626'
   },
   summaryContainer: {
+    backgroundColor: '#fff',
     marginTop: 16,
     paddingTop: 12,
     borderTopWidth: 1,

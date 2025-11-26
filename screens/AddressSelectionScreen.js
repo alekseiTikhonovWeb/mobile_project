@@ -10,7 +10,6 @@ const AddressSelectionScreen = ({ navigation }) => {
 
   useEffect(() => {
     const uid = auth.currentUser?.uid;
-    if (!uid) return;
     const q = query(collection(db, 'addresses'), where('userId', '==', uid));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const addrList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));

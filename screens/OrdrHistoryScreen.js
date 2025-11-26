@@ -1,34 +1,16 @@
-// screens/OrderHistoryScreen.js
-// Shows list of previous orders for the logged-in user (from Firestore).
-
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  SafeAreaView,
-  ScrollView,
-  Alert,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { auth, db } from '../services/firebase';
-import {
-  collection,
-  query,
-  where,
-  onSnapshot,
-} from 'firebase/firestore';
+import { collection, query, where, onSnapshot } from 'firebase/firestore';
 
 export default function OrdrHistoryScreen({ navigation }) {
   const [orders, setOrders] = useState([]);
 
-  // Listen for orders of current user in Firestore
+  // Get user's orders
   useEffect(() => {
     const user = auth.currentUser;
-    if (!user) return;
-
     const ordersRef = collection(db, 'orders');
     const q = query(ordersRef, where('userId', '==', user.uid));
 
@@ -87,7 +69,6 @@ export default function OrdrHistoryScreen({ navigation }) {
       <ScrollView contentContainerStyle={styles.content}>
         {orders.map((order) => (
           <View key={order.id} style={styles.card}>
-            {/* Top row: order number + status pill */}
             <View style={styles.topRow}>
               <View>
                 <Text style={styles.orderId}>Order #{order.orderNumber || order.id}</Text>
@@ -100,7 +81,7 @@ export default function OrdrHistoryScreen({ navigation }) {
               </View>
             </View>
 
-            {/* Items (simple text list) */}
+            {/* Items */}
             <View style={styles.itemsSection}>
               {(order.items || []).map((item, index) => (
                 <View key={index} style={styles.itemRow}>
@@ -110,7 +91,7 @@ export default function OrdrHistoryScreen({ navigation }) {
               ))}
             </View>
 
-            {/* Total + Track Order button */}
+            {/* Total */}
             <View style={styles.bottomRow}>
               <View>
                 <Text style={styles.totalLabel}>Total:</Text>

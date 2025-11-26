@@ -1,6 +1,3 @@
-// screens/AddressesScreen.js
-// List of user addresses with a modal form to add new ones (Firestore-based).
-
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -11,7 +8,6 @@ import {
   Modal,
   TextInput,
   KeyboardAvoidingView,
-  Platform,
   ScrollView,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -46,8 +42,8 @@ export default function AddressesScreen({ navigation }) {
     const user = auth.currentUser;
     if (!user) return;
 
-    const addressesRef = collection(db, 'addresses');
-    const q = query(addressesRef, where('userId', '==', user.uid));
+    const addresses = collection(db, 'addresses');
+    const q = query(addresses, where('userId', '==', user.uid));
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const list = snapshot.docs.map((d) => ({
@@ -117,7 +113,7 @@ export default function AddressesScreen({ navigation }) {
   }
 };
 
-  // Set selected address as default
+  // Set address as default
   const handleSetDefault = async (addressId) => {
     const user = auth.currentUser;
     if (!user) return;
@@ -136,7 +132,7 @@ export default function AddressesScreen({ navigation }) {
       await Promise.all(updates);
     } catch (error) {
       console.log(error);
-      Alert.alert('Error', 'Could not update default address.');
+      Alert.alert('Error', 'Could not update default address');
     }
   };
 
@@ -146,13 +142,13 @@ export default function AddressesScreen({ navigation }) {
       await deleteDoc(doc(db, 'addresses', addressId));
     } catch (error) {
       console.log(error);
-      Alert.alert('Error', 'Could not delete address.');
+      Alert.alert('Error', 'Could not delete address');
     }
   };
 
   return (
     <View style={styles.screen}>
-      {/* Header with gradient and + button */}
+      {/* Header */}
       <LinearGradient
         colors={['#6bd7efff', '#70e97aff']}
         style={styles.headerGradient}
@@ -203,7 +199,7 @@ export default function AddressesScreen({ navigation }) {
                 onPress={() => handleDelete(addr.id)}
                 style={styles.iconButton}
               >
-                <Ionicons name="trash-outline" size={18} color="#dc2626" />
+                <Ionicons name="trash-outline" size={18} color="#f81e1eff" />
               </TouchableOpacity>
             </View>
           </View>
@@ -211,12 +207,12 @@ export default function AddressesScreen({ navigation }) {
 
         {addresses.length === 0 && (
           <Text style={styles.emptyText}>
-            You have no saved addresses yet. Tap + to add one.
+            You have no saved addresses yet.
           </Text>
         )}
       </ScrollView>
 
-      {/* Modal with quick form */}
+      {/* Modal form */}
       <Modal
         visible={isModalVisible}
         animationType="slide"
@@ -363,7 +359,6 @@ const styles = StyleSheet.create({
     color: '#6b7280',
     fontSize: 14,
   },
-  // Modal styles
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.4)',

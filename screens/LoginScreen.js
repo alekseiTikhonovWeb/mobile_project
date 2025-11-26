@@ -1,5 +1,3 @@
-// Login screen
-
 import React, { useState } from 'react';
 import {
   View,
@@ -30,7 +28,6 @@ const LoginScreen = ({ navigation }) => {
     try {
       await signInWithEmailAndPassword(auth, email.trim(), password);
       alert('Logged in successfully.');
-      // TODO: later navigate to the main product screen here
     } catch (error) {
       console.log(error);
       let message = 'Could not sign in. Check your email and/or password';
