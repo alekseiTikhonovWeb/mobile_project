@@ -98,7 +98,7 @@ export default function ProfileScreen({ navigation }) {
         {/* Payment Methods */}
         <TouchableOpacity
           style={styles.menuRow}
-          onPress={() => navigation.navigate('PaymentMethods')}
+          onPress={() => navigation.navigate('PaymntMethods')}
         >
           <View style={styles.menuLeft}>
             <Ionicons
